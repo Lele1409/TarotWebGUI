@@ -1,0 +1,59 @@
+:root {
+    --card-size-unit: 1vw;
+    --white: #fff;
+    --black: #000;
+    --red: #f00;
+}
+
+body {
+    background-color: rgb(14, 68, 4);
+    margin: 0;
+}
+
+.deck {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+card {
+    margin: .5%;
+
+    border-radius: calc(.3 * var(--card-size-unit));
+    border: calc(.2 * var(--card-size-unit)) solid var(--white);
+    background-color: var(--white);
+    
+    --card-color: var(--black);
+}
+
+card[suit="♢"], card[suit="♡"] {
+    --card-color: var(--red);
+}
+
+card-half {
+    font-size: calc(1.5 * var(--card-size-unit));
+    color: var(--card-color);
+
+    display: block;
+    width: calc(5.3 * var(--card-size-unit));
+    height: calc(.5 * 10.7 * var(--card-size-unit));
+
+    background-position-y: bottom;
+    background-size: 100% calc(calc(.5 * 10.7 * var(--card-size-unit)) - calc(2 * var(--card-size-unit)));
+    background-repeat: no-repeat;
+
+    border: calc(.2 * var(--card-size-unit)) solid var(--black);
+    border-bottom: 0 solid var(--white);
+    border-radius: calc(.3 * var(--card-size-unit)) calc(.3 * var(--card-size-unit)) 0 0;
+}
+
+card[suit="T"] card-half {
+    text-align: center;
+}
+
+card:not([suit="T"]) {
+    text-indent: calc(.2 * var(--card-size-unit));
+}
+
+card-half.half-1 {
+    transform: scale(-1, -1);
+}
