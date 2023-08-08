@@ -1,0 +1,4 @@
+- The spritesheet must have a width divisible by 59.
+- The 21*2 first sprites are the upper and lower half of each trump. (Following order: upper-1, lower-1, upper-2, lower-2...), then follows the excuse (ex) and then each face card for each suit once (suits are in the following order: ♠-J, ♠-C, ♠-Q, ♠-K, ♥-..., ♣-..., ♦-...)
+- All Sprites must have the same height.
+- Height should be 1.66x the width of a single sprite 
