@@ -1,0 +1,54 @@
+/* entire container, keeps perspective */
+.flip-container {
+  -webkit-perspective: 1000;
+  background: #ccc; /**/
+  margin: 100px auto; /**/
+}
+
+/* flip the pane when clicked */
+.flip-container:hover .flipper {
+  transform: rotateY(180deg);
+}
+
+.flip-container, .front, .back { /**/
+	width: 320px; /**/
+	height: 480px; /**/
+} /**/
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.4s;
+	transform-style: preserve-3d;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+  z-index: 2;
+  background: yellow;
+}
+
+/* back, initially hidden pane */
+.back {
+  transform: rotateY(180deg);
+  background: brown;
+}
+
+
+<div class="flip-container">
+	<div class="flipper">
+		<div class="front">
+      front of card
+		</div>
+		<div class="back">
+      back of card
+		</div>
+	</div>
+</div>
