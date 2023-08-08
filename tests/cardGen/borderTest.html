@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  .multi-bordered {
+    position: relative;
+    width: 200px;
+    height: 100px;
+    background-color: lightgray;
+    border: 2px solid black;
+    padding: 10px;
+    margin: 20px;
+  }
+
+  .multi-bordered::before,
+  .multi-bordered::after {
+    content: "";
+    position: absolute;
+    top: -6px; /* adjust this value to control spacing between borders */
+    left: -6px; /* adjust this value to control spacing between borders */
+    right: -6px; /* adjust this value to control spacing between borders */
+    bottom: -6px; /* adjust this value to control spacing between borders */
+    border: 2px solid red; /* color and style of the additional borders */
+  }
+
+  .multi-bordered::after {
+    top: -12px; /* adjust this value to control spacing between borders */
+    left: -12px; /* adjust this value to control spacing between borders */
+    right: -12px; /* adjust this value to control spacing between borders */
+    bottom: -12px; /* adjust this value to control spacing between borders */
+    border-color: blue; /* color of the second additional border */
+  }
+</style>
+</head>
+<body>
+
+<div class="multi-bordered">
+  This is a div with multiple borders.
+</div>
+
+</body>
+</html>
