@@ -1,22 +1,23 @@
 :root {
-    --card-size-unit: 3vw;
+    --card-size-unit: 1.2vw;
     --white: #fff;
     --black: #000;
-    --red: #f00;
+    --red: rgb(255, 0, 0);
 }
 
 body {
-    background-color: rgb(14, 68, 4);
+    background-color: rgba(14, 68, 4, 1);
     margin: 0;
+}
+
+::selection {
+    background-color: inherit;
+    color: inherit;
 }
 
 .deck {
     display: flex;
     flex-wrap: wrap;
-}
-
-#svg-container {
-    display: none;
 }
 
 
@@ -30,6 +31,12 @@ card-wrapper {
     background-color: var(--white);
     
     --card-color: var(--black);
+}
+
+card:hover {
+    transform: rotateY(180deg);
+    transition-duration: .6s;
+    transform-style: preserve-3d;
 }
 
 card {
@@ -51,13 +58,14 @@ card-half {
     font-weight: bolder;
     color: var(--card-color);
 
+    background-size: 5900% 70%;
     background-position-y: bottom;
-    background-size: 100% calc(calc(.5 * 10.7 * var(--card-size-unit)) - calc(2 * var(--card-size-unit)));
     background-repeat: no-repeat;
+    
 }
 
 card-half .card-value {
-    background-color: var(--white);
+    background-color: rgba(0, 0, 0, 0)
 }
 
 
@@ -71,7 +79,6 @@ suit-symbol {
 
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    text-align: 0;
 }
 
 suit-symbol svg {
@@ -143,10 +150,10 @@ card[suit="T"] card-half {
     text-align: center;
 }
 
-card:not([suit="T"]) {
+card:not([suit="T"]) card-half {
     text-indent: calc(.2 * var(--card-size-unit));
 }
 
-card-half.half-1 {
+card-half.lower-half {
     transform: scale(-1, -1);
 }
