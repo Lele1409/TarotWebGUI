@@ -4,6 +4,7 @@ const suitName = {"♠": "spades", "♥": "hearts", "♣":"clubs", "♦":"diamon
 const cardRanks = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'C', 'Q', 'K']
 const suitSVGs = {}
 let spritesheetOffset = 0
+let nCardsCreated = 0
 
 // Allows during the creation of the cards to determine the placement of each symbol
 const symbolPositions = [
@@ -20,14 +21,19 @@ const symbolPositions = [
 ]
 
 function createCard(suit, rank) {
-    let cardWrapper = document.createElement('card-wrapper')
-    let card = document.createElement('card')
-    
+    let card = document.createElement('tarot-card')
+
     card.setAttribute('suit', suit)
     card.setAttribute('rank', rank)
+    card.setAttribute('card', `${suit}${rank}`)
+    card.id = `tarot-card-${nCardsCreated++}`
+
+    let cardFront = document.createElement('tarot-card-front')
+    let cardOuterBorder = document.createElement('tarot-card-outer-border')
+    let cardContainer = document.createElement('tarot-card-container')
 
     for (let i = 0; i <= 1; i++) {
-        let cardHalf = document.createElement('card-half')
+        let cardHalf = document.createElement('tarot-card-half')
 
         cardHalf.innerHTML = `<span class="card-value">${rank}</span>`
         
@@ -49,30 +55,44 @@ function createCard(suit, rank) {
             spritesheetOffset--
         }
 
-        card.appendChild(cardHalf)
+        cardContainer.appendChild(cardHalf)
     }
+
+    let cardSuitSymbolsContainer = document.createElement('tarot-card-suit-symbols-container')
 
     if (!(suit === 'T') && !(cardRanks.slice(10, 14).includes(rank))) {
         for (let i = 0; i < rank; i++) {
-            let suitSymbol = document.createElement('suit-symbol')
-            suitSymbol.setAttribute('suit', suit)
-            suitSymbol.classList.add(symbolPositions[rank - 1][i])
-            suitSymbol.innerHTML = suitSVGs[suitName[suit]]
-            card.appendChild(suitSymbol)
+            let cardSuitSymbol = document.createElement('tarot-card-suit-symbol')
+            cardSuitSymbol.classList.add(symbolPositions[rank - 1][i])
+            cardSuitSymbol.innerHTML = suitSVGs[suitName[suit]]
+            cardSuitSymbolsContainer.appendChild(cardSuitSymbol)
         }
     }
 
-    cardWrapper.appendChild(card)
+    cardContainer.appendChild(cardSuitSymbolsContainer)
 
-    return cardWrapper
+    cardOuterBorder.appendChild(cardContainer)
+    cardFront.appendChild(cardOuterBorder)
+    card.appendChild(cardFront)
+
+    let cardBack = document.createElement('tarot-card-back')
+ 
+    cardOuterBorder = document.createElement('tarot-card-outer-border')
+    cardContainer = document.createElement('tarot-card-container')
+
+    cardOuterBorder.appendChild(cardContainer)
+    cardBack.appendChild(cardOuterBorder)
+    card.appendChild(cardBack)
+
+    return card
 }
 
 async function fetchSVGs() {
     // Get .svg ressources to use in the creation of the cards
     const response = await fetch(`./ressources/svg-suits.html`)
-    const data = await response.text()
+    const data = await (await response.text()).toString()
     for (const suit of Object.values(suitName)) {
-        suitSVGs[suit] = data
+        suitSVGs[suit] = data.split('\n')[Object.values(suitName).indexOf(suit)]
     }
 }
 
