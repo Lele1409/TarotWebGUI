@@ -42,7 +42,7 @@ tarot-card {
     transform-style: preserve-3d;
 }
 
-tarot-card:hover {
+tarot-card[isFlipped='true'] {
     transform: rotateY(180deg);
 }
 
@@ -78,7 +78,7 @@ tarot-card-container {
     width: calc(calc(5.3 * var(--card-size-unit)) + .5px );
     height: calc(10.7 * var(--card-size-unit));
 
-    border-radius: calc(.3 * var(--card-size-unit)) calc(.3 * var(--card-size-unit));
+    border-radius: calc(.3 * var(--card-size-unit));
     border: calc(.2 * var(--card-size-unit)) solid var(--black);
 }
 
@@ -99,6 +99,11 @@ tarot-card-half {
 
 tarot-card-half > span.card-value {
     background-color: rgba(0, 0, 0, 0)
+}
+
+tarot-card-back * {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 
 

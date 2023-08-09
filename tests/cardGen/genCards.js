@@ -26,6 +26,7 @@ function createCard(suit, rank) {
     card.setAttribute('suit', suit)
     card.setAttribute('rank', rank)
     card.setAttribute('card', `${suit}${rank}`)
+    card.setAttribute('isFlipped', 'false')
     card.id = `tarot-card-${nCardsCreated++}`
 
     let cardFront = document.createElement('tarot-card-front')
@@ -75,12 +76,14 @@ function createCard(suit, rank) {
     cardFront.appendChild(cardOuterBorder)
     card.appendChild(cardFront)
 
+    // Create the element for the back of the card
     let cardBack = document.createElement('tarot-card-back')
- 
     cardOuterBorder = document.createElement('tarot-card-outer-border')
     cardContainer = document.createElement('tarot-card-container')
 
-    cardOuterBorder.appendChild(cardContainer)
+    cardContainer.style.backgroundImage = "url('./ressources/tarot-card-back.png')"
+
+    cardOuterBorder.append(cardContainer)
     cardBack.appendChild(cardOuterBorder)
     card.appendChild(cardBack)
 
@@ -119,4 +122,15 @@ async function createDeck(deckElementSelector) {
     deck.forEach(card => {deckElement.appendChild(card)})
 }
 
-createDeck('.deck')
+// ***** RUN *****
+async function run() {
+    await createDeck('.deck')
+
+    x = 0
+    y = 0
+    setInterval( function() {
+        document.querySelector(`#tarot-card-${x++}`).setAttribute('isFlipped', 'true')
+    }, 4000)
+}
+
+run()
