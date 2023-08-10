@@ -29,6 +29,11 @@ function createCard(suit, rank) {
     card.setAttribute('isFlipped', 'false')
     card.id = `tarot-card-${nCardsCreated++}`
 
+    // Initialize relative position to parent to 0%, so the next change gets animated and the card does not get teleported
+    card.style.top = '0%'
+    card.style.left = '0%'
+
+
     let cardFront = document.createElement('tarot-card-front')
     let cardOuterBorder = document.createElement('tarot-card-outer-border')
     let cardContainer = document.createElement('tarot-card-container')
@@ -99,8 +104,15 @@ async function fetchSVGs() {
     }
 }
 
-async function createDeck(deckElementSelector) {
+
+// ***************************
+// ********** "API" **********
+// ***************************
+async function createDeck(deckElementSelectorString) {
     await fetchSVGs();
+
+    // Reset offset when creating a deck after the first
+    spritesheetOffset = 0
 
     // Create the cards
     // First trumps
@@ -118,19 +130,43 @@ async function createDeck(deckElementSelector) {
         })
     })
 
-    const deckElement = document.querySelector(deckElementSelector)
+    const deckElement = document.querySelector(deckElementSelectorString)
     deck.forEach(card => {deckElement.appendChild(card)})
 }
 
-// ***** RUN *****
-async function run() {
-    await createDeck('.deck')
+async function setCardPosition(cards, top, left, interval=500, reversed=false) {
+    // Select the cards
+    if (typeof(cards) === 'string') {
+        cards = Array.from(document.querySelectorAll(cards))
+    } else if (typeof(cards) === 'array') {
+        cards = cards
+    } else {
+        console.error("Parameter cards must be either a string or a array of card elements")
+    }
 
-    x = 0
-    y = 0
-    setInterval( function() {
-        document.querySelector(`#tarot-card-${x++}`).setAttribute('isFlipped', 'true')
-    }, 4000)
+    if (reversed) {cards.reverse()}
+
+    // Move cards one by one
+    for (card of cards) {
+        await new Promise(resolve => setTimeout(resolve, interval));
+        card.style.top = top
+        card.style.left = left
+    }
 }
 
-run()
+async function setCardFlippedState(cards, isFlipped, interval=500, reversed=false) {
+    // Select the cards
+    if (typeof(cards) === 'string') {
+    cards = Array.from(document.querySelectorAll(cards))
+    } else {
+        cards = Array.from(cards)
+    }
+
+    if (reversed) {cards.reverse()}
+
+    // Flip cards one by one
+    for (card of cards) {
+        await new Promise(resolve => setTimeout(resolve, interval));
+        card.setAttribute("isFlipped", isFlipped)
+    }
+}

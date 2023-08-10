@@ -16,17 +16,14 @@ body {
 }
 
 .deck {
-    display: flex;
-    flex-wrap: wrap;
 }
 
 
 /* MAIN CARD ELEMENTS */
 
 tarot-card {
-    margin: .5%;
-
-    position: relative;
+    position: absolute;
+    display: inline;
 
     --card-text-color: var(--black);
 
@@ -39,7 +36,6 @@ tarot-card {
 	-webkit-transform-style: preserve-3d;
 
     transition-duration: .4s;
-    transform-style: preserve-3d;
 }
 
 tarot-card[isFlipped='true'] {
