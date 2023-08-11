@@ -1,18 +1,8 @@
-:root {
-    --card-size-unit: 1.2vw;
+tarot-card {
+    --card-size-unit: 1dvw;
     --white: #fff;
     --black: #000;
     --red: rgb(255, 0, 0);
-}
-
-body {
-    background-color: rgba(14, 68, 4, 1);
-    margin: 0;
-}
-
-::selection {
-    background-color: inherit;
-    color: inherit;
 }
 
 
@@ -20,8 +10,8 @@ body {
 
 tarot-card {
     position: absolute;
-    display: inline;
-
+    
+    user-select: none;
     --card-text-color: var(--black);
 
 /* ------------------- */
@@ -58,7 +48,7 @@ tarot-card-back {
 /* ------------------- */
 
 tarot-card-outer-border {
-    display: block;
+    display: inline-block;
 
     border-radius: calc(.3 * var(--card-size-unit));
     border: calc(.2 * var(--card-size-unit)) solid var(--white);
@@ -188,3 +178,5 @@ tarot-card:not([suit="T"]) tarot-card-half {
 tarot-card-half.lower-half {
     transform: scale(-1, -1);
 }
+
+/* TODO: hover-effect, little shadow around card?*/

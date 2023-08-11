@@ -52,7 +52,7 @@ function createCard(suit, rank) {
 
         // Set the class defining the image
         if (suit === 'T' || cardRanks.slice(10, 14).includes(rank)) {  // Only for cards that have a background image
-            cardHalf.style.backgroundImage = "url('./ressources/spritesheet.webp')"
+            cardHalf.style.backgroundImage = "url('./cards/ressources/spritesheet.webp')"
             cardHalf.style.backgroundPositionX = `${spritesheetOffset++*100/58}%`
         }
 
@@ -86,7 +86,7 @@ function createCard(suit, rank) {
     cardOuterBorder = document.createElement('tarot-card-outer-border')
     cardContainer = document.createElement('tarot-card-container')
 
-    cardContainer.style.backgroundImage = "url('./ressources/tarot-card-back.png')"
+    cardContainer.style.backgroundImage = "url('./cards/ressources/tarot-card-back.png')"
 
     cardOuterBorder.append(cardContainer)
     cardBack.appendChild(cardOuterBorder)
@@ -97,7 +97,7 @@ function createCard(suit, rank) {
 
 async function fetchSVGs() {
     // Get .svg ressources to use in the creation of the cards
-    const response = await fetch(`./ressources/svg-suits.html`)
+    const response = await fetch(`./cards/ressources/svg-suits.html`)
     const data = await (await response.text()).toString()
     for (const suit of Object.values(suitName)) {
         suitSVGs[suit] = data.split('\n')[Object.values(suitName).indexOf(suit)]
@@ -117,18 +117,18 @@ async function createDeck(deckElementSelectorString) {
     // Create the cards
     // First trumps
     const deck = []
-    for (let i = 1; i <= 21; i++) {
+    for (let i = 1; i <= 11; i++) {  // TODO: change back to 21
         deck.push(createCard('T', i))
     }
     // Add the excuse
     deck.push(createCard('T', 'EX'))
 
     // Add all the cards from the other suits
-    suits.forEach(suit => {
-        cardRanks.forEach(rank => {
-            deck.push(createCard(suit, rank))
-        })
-    })
+    //suits.forEach(suit => {
+    //    cardRanks.forEach(rank => {
+    //        deck.push(createCard(suit, rank))
+    //    })
+    //})
 
     const deckElement = document.querySelector(deckElementSelectorString)
     deck.forEach(card => {deckElement.appendChild(card)})

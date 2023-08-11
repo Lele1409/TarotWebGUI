@@ -1,0 +1,105 @@
+body {
+    margin: 0px;
+    height: 100lvh;
+    width: 100lvw;
+
+    background-color: blue;
+}
+
+invalid-screen-overlay {
+    display: none;
+}
+
+@media (max-aspect-ratio: 1/1), (min-aspect-ratio: 3.5/1) {
+    invalid-screen-overlay {
+        display: block;
+        height: 100dvh;
+        width: 100dvw;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-color: rgba(100, 100, 100, 0.8);
+
+        color: #fff;
+        text-align: center;
+        font: small-caps bold 24px/1 sans-serif;;
+        font-size: xx-large;
+    }
+}
+
+
+tarot-table {
+    position: relative;
+    display: block;
+    height: 100dvh;
+    width: 100dvw;
+
+    background: green;  /* WIP: textured? real img? */
+}
+
+other-player-hand {
+    position: absolute;
+
+    background-color: cornflowerblue;
+    padding: 1em;
+    border: 2px solid yellow;
+}
+
+own-hand {
+    position: absolute;
+    top: 65%;
+    left: 20%;
+    right: 20%;
+    bottom: .1%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: clip;
+
+    background-color: tomato;
+}
+
+own-hand-upper-row {
+    height: 25%;
+}
+
+@media (max-height: 800px) {
+    own-hand-upper-row {
+        height: 35%;
+    }
+    own-hand-lower-row {
+        height: 45%;
+    }
+}
+
+.own-hand-card-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.own-hand-card-row > tarot-card {
+    position: unset;
+    width: 8%;
+}
+
+card-stack {
+    position: absolute;
+    top: 30%; left: 50%; right: 50%; bottom: 70%;
+    transform: scale(0.7);
+}
+
+card-stack > tarot-card {
+    transform-origin: 0% 0%;
+}
