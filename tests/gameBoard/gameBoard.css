@@ -35,7 +35,6 @@ invalid-screen-overlay {
     }
 }
 
-
 tarot-table {
     position: relative;
     display: block;
@@ -45,41 +44,82 @@ tarot-table {
     background: green;  /* WIP: textured? real img? */
 }
 
+/***************/
+/* OTHERS HAND */
+
 other-player-hand {
     position: absolute;
-
-    background-color: cornflowerblue;
-    padding: 1em;
-    border: 2px solid yellow;
 }
+
+other-player-profile-picture {
+    display: block;
+	box-sizing: border-box;
+
+    width: 8dvw;
+    aspect-ratio: 1/1;
+
+    transform: translate(-50%, -50%);
+
+	border: 0.25dvw solid transparent;
+	border-radius: 50%;
+
+	background-origin: border-box;
+	background-clip: content-box, border-box;
+	background-size: cover;
+	background-image: var(--profile-picture), linear-gradient(to bottom right, #000000, #171ab8, #7c9bff);
+    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+other-player-username {
+    display: block;
+    position: relative;
+    top: 50%;
+    left: 50%;
+
+    width: 0px;
+    height: 0px;
+
+    font-size: small;
+    text-transform: uppercase;
+
+    transform: scaleX(-1);
+}
+
+other-player-username > span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    line-height: 9dvw;
+    font-weight: bolder;
+    color: #000;
+}
+
+/* OTHERS HAND */
+/***************/
+
+/************/
+/* OWN HAND */
 
 own-hand {
     position: absolute;
-    top: 65%;
-    left: 20%;
-    right: 20%;
-    bottom: .1%;
+    left: 24%;
+    right: 24%;
+    bottom: 0%;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    overflow: clip;
 
-    background-color: tomato;
+    overflow-y: clip;
 }
 
-own-hand-upper-row {
-    height: 25%;
-}
-
-@media (max-height: 800px) {
-    own-hand-upper-row {
-        height: 35%;
-    }
-    own-hand-lower-row {
-        height: 45%;
-    }
+own-hand-upper-row tarot-card {
+    transform: translateY(40%);
 }
 
 .own-hand-card-row {
@@ -94,10 +134,17 @@ own-hand-upper-row {
     width: 8%;
 }
 
+.own-hand-card-row > tarot-card:last-child {
+    width: unset;
+}
+
+/* OWN HAND */
+/************/
+
 card-stack {
     position: absolute;
     top: 30%; left: 50%; right: 50%; bottom: 70%;
-    transform: scale(0.7);
+    transform: scale(0.85);
 }
 
 card-stack > tarot-card {

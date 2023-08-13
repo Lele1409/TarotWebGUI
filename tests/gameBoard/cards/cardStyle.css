@@ -1,24 +1,28 @@
-tarot-card {
-    --card-size-unit: 1dvw;
+/* VAR */
+
+:root {
     --white: #fff;
     --black: #000;
     --red: rgb(255, 0, 0);
 }
 
-tarot-card:hover {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+tarot-card {
+    --card-size-unit: min(1.1dvw,2dvh);
 }
 
-tarot-card {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+/* Pseudo class */
+
+tarot-card:hover {  /* TODO: only for clickable cards?? */
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 /* MAIN CARD ELEMENTS */
 
 tarot-card {
     position: absolute;
-
+    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     
     user-select: none;
     --card-text-color: var(--black);
