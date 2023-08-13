@@ -21,10 +21,10 @@ async function createOtherPlayersHands(playerCount) {
         profilePicture.style.setProperty('--profile-picture', "url('https://placehold.jp/3d4070/ffffff/150x150.png')")  // TODO: replace with getUserProfilePicture()
 
         let userNameDisplay = document.createElement('other-player-username')
-        let username = 'example user 123 123'  // TODO: replace with getUsername()
+        let username = 'example user 123'  // TODO: replace with getUsername()
         userNameDisplay.setAttribute('username', username)
         
-        let angleStep = 10
+        let angleStep = 11
         let angle = username.length/2 * -(angleStep) + angleStep/2
         for (letter of username) {
             userNameDisplay.innerHTML += `<span style="transform: rotate(${angle}deg) scaleX(-1);">${letter}</span>`
