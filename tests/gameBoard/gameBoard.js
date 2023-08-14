@@ -51,41 +51,30 @@ async function onOwnHandMutation(mutations) {
     const upperRow = document.querySelector('own-hand-upper-row')
     const lowerRow = document.querySelector('own-hand-lower-row')
 
-    let upperNodes = Array.from(upperRow.childNodes)
-    let lowerNodes = Array.from(lowerRow.childNodes)
+    console.log(upperRow, lowerRow)
 
-    ownHandObserver.disconnect()
+    let upperNodes = Array.from(upperRow.children)
+    let lowerNodes = Array.from(lowerRow.children)
 
-    lowerNodes.forEach((node) => upperRow.appendChild(node))
-    console.log("moving up", upperNodes)
-    while ((upperNodes.length > lowerNodes.length > 0 || 0 < upperNodes.length <= 3)) {
-        console.log(upperNodes.length > lowerNodes.length > 0, 0 < upperNodes.length <= 3)
-        console.log(upperRow.lastChild)
-        lowerRow.appendChild(upperRow.lastChild)
+    if (upperNodes.length > 0 && (upperNodes.length > lowerNodes.length || (0 < upperNodes && upperNodes <= 3))) {
+        console.log("runter")
+        lowerRow.insertBefore(upperRow.lastElementChild, lowerRow.firstElementChild)
+    } else if (upperNodes.length > 3 && lowerNodes.length + 2 > upperNodes.length) {
+        console.log("normal hcoho")
+        upperRow.appendChild(lowerRow.firstElementChild)
+    } else if (upperNodes.length <= 3 && lowerNodes.length > 9) {
+        console.log("hoch")
+        ownHandObserver.disconnect()
+        for (i = 0; i < 3; i++) {
+            upperRow.appendChild(lowerRow.firstElementChild)
+        }
+        ownHandObserver.observe( document.querySelector('own-hand'), {
+            childList: true,
+            subtree: true
+        })
+
+        upperRow.appendChild(lowerRow.firstChild)
     }
-
-    createOwnHand()
-
-    // if (upperNodes.length > 0 && (upperNodes.length > lowerNodes.length || 0 < upperNodes <= 3)) {
-    //     console.log("runter")
-    //     lowerRow.insertBefore(upperRow.lastElementChild, lowerRow.firstElementChild)
-    // } else if (upperNodes.length > 3 && lowerNodes.length + 2 > upperNodes.length) {
-    //     console.log("normal hcoho")
-    //     upperRow.appendChild(lowerRow.firstElementChild)
-    // } else if (upperNodes.length <= 3) {
-    //     console.log("hoch")
-    //     ownHandObserver.disconnect()
-    //     for (i = 0; i < 3; i++) {
-    //         upperRow.appendChild(lowerRow.firstElementChild)
-    //     }
-    //     ownHandObserver.observe( document.querySelector('own-hand'), {
-    //         childList: true,
-    //         subtree: true
-    //     })
-
-    //     upperRow.appendChild(lowerRow.firstChild)
-    // }
-    console.log(upperNodes.flat(), lowerNodes.flat())
     
 }
 
@@ -97,7 +86,6 @@ async function run() {
     await createDeck("card-stack")
 
     // DEBUG:
-    await createDeck('own-hand-lower-row')
 
     n = 0
     //setInterval(() => {document.querySelector("card-stack > tarot-card").style.transform = `translateX(-50%) rotate(${n++}deg)`}, 1)
