@@ -7,7 +7,7 @@
 }
 
 tarot-card {
-    --card-size-unit: min(1.1dvw,2dvh);
+    --card-size-unit: min(1.1dvw,1.7dvh);
 }
 
 /* Pseudo class */
@@ -37,7 +37,12 @@ tarot-card {
 }
 
 tarot-card[isFlipped='true'] {
+    transform-origin: center;
     transform: rotateY(180deg);
+}
+
+tarot-card[isFlipped='true'] tarot-card-front {
+    visibility: hidden;
 }
 
 tarot-card-front,
@@ -69,7 +74,7 @@ tarot-card-outer-border {
 tarot-card-container {
     position: relative;
     display: block;
-    width: calc(calc(5.3 * var(--card-size-unit)) + .5px );
+    width: calc(calc(5.3 * var(--card-size-unit)));
     height: calc(10.7 * var(--card-size-unit));
 
     border-radius: calc(.3 * var(--card-size-unit));

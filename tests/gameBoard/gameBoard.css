@@ -3,7 +3,7 @@ body {
     height: 100lvh;
     width: 100lvw;
 
-    background-color: blue;
+    background-color: rgb(0, 60, 0);
 }
 
 invalid-screen-overlay {
@@ -58,7 +58,7 @@ other-player-hand {
     transform: translate(-50%, -50%);
 
     border-radius: 50%;
-    border: 5.3dvw solid #cfcfcf;  /* getBadgeColor? */
+    border: 4.6dvw solid #cfcfcf;  /* getBadgeColor? */
     
     box-shadow: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.48); /*Replace pixel values by dynamic sizes*/
 }
@@ -68,7 +68,7 @@ other-player-profile-picture {
     display: block;
 	box-sizing: border-box;
 
-    width: 8dvw;
+    width: 7dvw;
     aspect-ratio: 1/1;
 
     transform: translate(-50%, -50%);
@@ -79,7 +79,7 @@ other-player-profile-picture {
 	background-origin: border-box;
 	background-clip: content-box, border-box;
 	background-size: cover;
-	background-image: var(--profile-picture), linear-gradient(to bottom right, #000000, #b81717, #ffa17c);
+	background-image: var(--profile-picture), linear-gradient(to bottom right, #000000, #b81717, #ffa17c); /* getBadgeColor? */
     
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
@@ -106,7 +106,7 @@ other-player-username > span {
     left: 0;
     right: 0;
     
-    line-height: 9dvw;
+    line-height: 8dvw;
     font-weight: bolder;
     color: #000;
     text-align: center;
@@ -159,8 +159,4 @@ card-stack {
     position: absolute;
     top: 30%; left: 50%; right: 50%; bottom: 70%;
     transform: scale(0.85);
-}
-
-card-stack > tarot-card {
-    transform-origin: 0% 0%;
 }
