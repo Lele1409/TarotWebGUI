@@ -117,9 +117,9 @@ async function createDeck(deckElementSelectorString) {
     // Create the cards
     // First trumps
     const deck = []
-    //for (let i = 1; i <= 21; i++) {  // TODO: change back to 21
-    //    deck.push(createCard('T', i))
-    //}
+    for (let i = 1; i <= 21; i++) {  // TODO: change back to 21
+        deck.push(createCard('T', i))
+    }
     // Add the excuse
     deck.push(createCard('T', 'EX'))
 
