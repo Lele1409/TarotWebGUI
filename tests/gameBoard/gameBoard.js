@@ -52,7 +52,7 @@ async function createOtherPlayersHands(playerCount) {
 const ownHandObserver = new MutationObserver(onOwnHandMutation)
 async function ownHandObserverConnect() {
     // The mutation observer observes all DOM changes to child elements in the own-hand
-    ownHandObserver.observe( document.querySelector('own-hand'), {
+    ownHandObserver.observe(document.querySelector('own-hand'), {
         childList: true,
         subtree: true
     })
@@ -81,19 +81,32 @@ async function onOwnHandMutation(mutations) {
         // Dont detect changes
         ownHandObserver.disconnect()
         // Move the first four cards from the lower row to the last position of the upper row
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < 3; i++) {
             upperRow.appendChild(lowerRow.firstElementChild)
         }
         // Reenable change detection
         await ownHandObserverConnect()
+
+        // To check if any other changes will have to be made, add last element while the change is detectable
+        upperRow.appendChild(lowerRow.firstElementChild)
+    }
+}
+
+const initialDeckObserver = new MutationObserver(onInitialDeckMutation)
+initialDeckObserver.observe(document.querySelector('init-deck'), {
+    childList: true,
+    subtree: true
+})
+
+async function onInitialDeckMutation(mutations) {
+    for (mutation of mutations) {
+        mutation.addedNodes.forEach(async function(node) {await setCardFlippedState(node, true, 0)})
     }
 }
 
 async function run() {
     await createOtherPlayersHands(Math.floor(Math.random() * (5 - 3 + 1)) + 3)  // TODO: replace with getPlayerCount
-    await createDeck("card-stack")
-    await createDeck("card-stack")
-    await createDeck("card-stack")
+    await createDeck("init-deck")
 
     // DEBUG:
 
@@ -102,3 +115,42 @@ async function run() {
 }
 
 run()
+
+
+// ***************************
+// ********** "API" **********
+// ***************************
+async function moveCards(cards, destTopPercent, destLeftPercent, interval=0, finalAppend=undefined) {
+    for (card of cards) {
+        let tarotTable = document.querySelector("tarot-table")
+
+        // Get the current position of the cards
+        let currentTop = (card.getBoundingClientRect().top - tarotTable.getBoundingClientRect().top) / tarotTable.getBoundingClientRect().bottom * 100
+        let currentLeft = (card.getBoundingClientRect().left - tarotTable.getBoundingClientRect().left) / tarotTable.getBoundingClientRect().right * 100
+
+        // Place the cards on the tarot-table, so they can freely move on it
+        tarotTable.appendChild(card)
+
+        // Set the position 
+        card.style.top = `${currentTop}%`
+        card.style.left = `${currentLeft}%`
+
+        // Delay for transition to happen (otherwise teleport)
+        await new Promise(resolve => setTimeout(resolve, 10))
+
+        // Move the card to the specified location
+        card.style.top = `${destTopPercent}%`
+        card.style.left = `${destLeftPercent}%`
+        
+        // Wait for transition end before appending
+        await new Promise(resolve => setTimeout(resolve,
+            // Time based on the transition-duration in ms
+            window.getComputedStyle(card).getPropertyValue("transition-duration").slice(0,-1)*1000)) 
+
+        if (typeof(finalAppend) === 'object' ) {
+            finalAppend.appendChild(card)
+        }
+
+        await new Promise(resolve => setTimeout(resolve, interval))
+    }
+}

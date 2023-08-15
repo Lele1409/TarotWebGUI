@@ -58,8 +58,8 @@ other-player-hand {
     transform: translate(-50%, -50%);
 
     border-radius: 50%;
-    border: 4.6dvw solid #cfcfcf;  /* getBadgeColor? */
-    
+    border: 4.6dvw solid;  /* getBadgeColor? */
+    border-color: rgb(137, 124, 124);
     box-shadow: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.48); /*Replace pixel values by dynamic sizes*/
 }
 
@@ -94,7 +94,13 @@ other-player-username {
     height: 0px;
 
     font-size: .8dvw;
+    font-weight: bolder;
+    line-height: 8dvw;
+    text-align: center;
     text-transform: uppercase;
+    color: #fff;
+
+    user-select: none;
 
     transform: scaleX(-1);
 }
@@ -105,11 +111,6 @@ other-player-username > span {
     bottom: 0;
     left: 0;
     right: 0;
-    
-    line-height: 8dvw;
-    font-weight: bolder;
-    color: #000;
-    text-align: center;
 }
 
 /* OTHERS HAND */
@@ -155,14 +156,13 @@ own-hand-upper-row tarot-card {
 /* OWN HAND */
 /************/
 
-/**************/
-/* CARD STACK */
+/*************/
+/* INIT DECK */
 
-card-stack {
+init-deck {
     position: absolute;
     top: 30%; left: 50%; right: 50%; bottom: 70%;
-    transform: scale(0.85);
 }
 
-/* CARD STACK */
-/**************/
+/* INIT DECK */
+/*************/
