@@ -1,0 +1,198 @@
+/* VAR */
+
+:root {
+    --white: #fff;
+    --black: #000;
+    --red: rgb(255, 0, 0);
+}
+
+tarot-card {
+    --card-size-unit: min(1.1dvw,1.7dvh);
+}
+
+/* Pseudo class */
+
+tarot-card:hover {  /* TODO: only for clickable cards?? */
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+/* MAIN CARD ELEMENTS */
+
+tarot-card {
+    position: absolute;
+    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    
+    user-select: none;
+    --card-text-color: var(--black);
+
+/* ------------------- */
+/* Flip transformation */
+    perspective: 800px;
+    -webkit-perspective: 800px;
+
+    transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+}
+
+tarot-card[isFlipped='true'] {
+    transform-origin: center;
+    transform: rotateY(180deg);
+}
+
+tarot-card[isFlipped='true'] tarot-card-front {
+    visibility: hidden;
+}
+
+tarot-card-front,
+tarot-card-back {
+	backface-visibility: hidden;
+}
+
+tarot-card-back {
+    display: block;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: rotateY(180deg);
+}
+/* Flip transformation */
+/* ------------------- */
+
+tarot-card-outer-border {
+    display: inline-block;
+
+    border-radius: calc(.3 * var(--card-size-unit));
+    border: calc(.2 * var(--card-size-unit)) solid var(--white);
+    background-color: var(--white);
+}
+
+tarot-card-container {
+    position: relative;
+    display: block;
+    width: calc(calc(5.3 * var(--card-size-unit)));
+    height: calc(10.7 * var(--card-size-unit));
+
+    border-radius: calc(.3 * var(--card-size-unit));
+    border: calc(.2 * var(--card-size-unit)) solid var(--black);
+}
+
+tarot-card-half {
+    display: block;
+    width: calc(calc(5.3 * var(--card-size-unit)) + .5px );
+    height: calc(.5 * 10.7 * var(--card-size-unit));
+
+    font-size: calc(1.5 * var(--card-size-unit));
+    font-weight: bolder;
+    color: var(--card-text-color);
+
+    background-size: 5900% 70%;
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    
+}
+
+tarot-card-half > span.card-value {
+    background-color: rgba(0, 0, 0, 0)
+}
+
+tarot-card-back * {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+
+/* SUIT SYMBOLS */
+
+tarot-card-suit-symbol {
+    position: absolute;
+
+    font-size: calc(2 * var(--card-size-unit));
+    color: var(--card-text-color);
+
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+tarot-card-suit-symbol > svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+tarot-card-suit-symbol[class*='center'] {
+    /* Start in the center so 
+    other selectors can overwrite it*/
+    left: 37.5%;
+    right: 37.5%;
+}
+
+tarot-card-suit-symbol[class^='center'] {
+    /* Start in the center so 
+    other selectors can overwrite it*/
+    top: 42.5%;
+    bottom: 42.5%;
+}
+
+tarot-card-suit-symbol[class*='-left'] {
+    left: 12.5%;
+    right: 62.5%;
+}
+
+tarot-card-suit-symbol[class*='-right'] {
+    left: 62.5%;
+    right: 12.5%;
+}
+
+tarot-card-suit-symbol[class^='top-'] {
+    top: 12.5%;
+    bottom: 72.5%;
+}
+
+tarot-card-suit-symbol[class^='center-top'] {
+    top: 27.5%;
+    bottom: 57.5%;
+}
+
+tarot-card-suit-symbol[class^='center-bottom'] {
+    top: 57.5%;
+    bottom: 27.5%;
+}
+
+tarot-card-suit-symbol[class^='bottom-'] {
+    top: 72.5%;
+    bottom: 12.5%;
+}
+
+tarot-card-suit-symbol.center-right svg,
+tarot-card-suit-symbol[class*='bottom'] svg {
+    transform: scale(-1, -1);
+}
+
+/* SPECIAL CASES */
+
+tarot-card[suit="♦"], tarot-card[suit="♥"] {
+    --card-text-color: var(--red);
+}
+
+tarot-card[suit="T"] tarot-card-half {
+    text-align: center;
+}
+
+tarot-card:not([suit="T"]) tarot-card-half {
+    text-indent: calc(.2 * var(--card-size-unit));
+}
+
+tarot-card-half.lower-half {
+    transform: scale(-1, -1);
+}
+
+/* TODO: hover-effect, little shadow around card?*/

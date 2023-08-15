@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="gameBoard.css">
+    <link rel="stylesheet" href="cards/cardStyle.css">
+    <script type="text/javascript" src="gameBoard.js" defer></script>
+    <script type="text/javascript" src="cards/genCards.js"></script>
+    <title>GameBoardTest</title>
+</head>
+<body>
+    <tarot-table>
+        <other-players-hands-wrapper></other-players-hands-wrapper>
+        <own-hand>
+            <own-hand-upper-row class="own-hand-card-row"></own-hand-upper-row>
+            <own-hand-lower-row class="own-hand-card-row"></own-hand-lower-row>
+        </own-hand>
+        <card-stack></card-stack>
+    </tarot-table>
+    <menu-wrapper>
+        <game-menu></game-menu>
+        <game-settings></game-settings>
+    </menu-wrapper>
+    <invalid-screen-overlay><!-- May want to replace with just some infobox instead of the overlay, or a button to remove the overlay -->
+        <span>
+            if on mobile please rotate your device. <br>
+            if on desktop please ajust your browser size.
+        </span>
+    </invalid-screen-overlay>
+</body>
+</html>

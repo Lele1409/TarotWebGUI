@@ -1,0 +1,168 @@
+body {
+    margin: 0px;
+    height: 100lvh;
+    width: 100lvw;
+
+    background-color: rgb(0, 60, 0);
+}
+
+invalid-screen-overlay {
+    display: none;
+}
+
+@media (max-aspect-ratio: 1/1), (min-aspect-ratio: 3.5/1) {
+    invalid-screen-overlay {
+        display: block;
+        height: 100dvh;
+        width: 100dvw;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-color: rgba(100, 100, 100, 0.8);
+
+        color: #fff;
+        text-align: center;
+        font: small-caps bold 24px/1 sans-serif;;
+        font-size: xx-large;
+    }
+}
+
+tarot-table {
+    position: relative;
+    display: block;
+    height: 100dvh;
+    width: 100dvw;
+
+    background: green;  /* WIP: textured? real img? */
+    background-image: url("data:image/png;base64,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");
+    box-shadow: 0 0 200px rgba(0,0,0,0.9) inset;
+}
+
+/***************/
+/* OTHERS HAND */
+
+other-player-hand {
+    position: absolute;
+
+    height: 0px;
+    width: 0px;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+    border: 4.6dvw solid #cfcfcf;  /* getBadgeColor? */
+    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.48); /*Replace pixel values by dynamic sizes*/
+}
+
+
+other-player-profile-picture {
+    display: block;
+	box-sizing: border-box;
+
+    width: 7dvw;
+    aspect-ratio: 1/1;
+
+    transform: translate(-50%, -50%);
+
+	border: 0.25dvw solid transparent;
+	border-radius: 50%;
+
+	background-origin: border-box;
+	background-clip: content-box, border-box;
+	background-size: cover;
+	background-image: var(--profile-picture), linear-gradient(to bottom right, #000000, #b81717, #ffa17c); /* getBadgeColor? */
+    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+other-player-username {
+    display: block;
+    position: relative;
+    top: 50%;
+    left: 50%;
+
+    width: 0px;
+    height: 0px;
+
+    font-size: .8dvw;
+    text-transform: uppercase;
+
+    transform: scaleX(-1);
+}
+
+other-player-username > span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    line-height: 8dvw;
+    font-weight: bolder;
+    color: #000;
+    text-align: center;
+}
+
+/* OTHERS HAND */
+/***************/
+
+/************/
+/* OWN HAND */
+
+own-hand {
+    position: absolute;
+    left: 24%;
+    right: 24%;
+    bottom: 0%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+
+    overflow-y: clip;
+}
+
+own-hand-upper-row tarot-card {
+    transform: translateY(40%);
+}
+
+.own-hand-card-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.own-hand-card-row > tarot-card {
+    position: unset;
+    width: 8%;
+}
+
+.own-hand-card-row > tarot-card:last-child {
+    width: unset;
+}
+
+/* OWN HAND */
+/************/
+
+/**************/
+/* CARD STACK */
+
+card-stack {
+    position: absolute;
+    top: 30%; left: 50%; right: 50%; bottom: 70%;
+    transform: scale(0.85);
+}
+
+/* CARD STACK */
+/**************/
