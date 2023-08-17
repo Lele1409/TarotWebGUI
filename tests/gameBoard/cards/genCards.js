@@ -131,7 +131,12 @@ async function createDeck(deckElementSelectorString) {
     })
 
     const deckElement = document.querySelector(deckElementSelectorString)
-    deck.forEach(card => {deckElement.appendChild(card)})
+    deckElement.style.visibility = 'hidden'
+    for (card of deck) {
+        deckElement.appendChild(card)
+        await new Promise(resolve => setTimeout(resolve, 10))
+    }
+    deckElement.style.visibility = 'visible'
 }
 
 async function setCardFlippedState(cards, isFlipped, interval=500, reversed=false) {

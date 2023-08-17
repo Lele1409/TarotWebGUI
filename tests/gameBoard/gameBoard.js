@@ -1,3 +1,10 @@
+const tarotTable = document.querySelector("tarot-table")
+
+const invalidOverlayCloseButton = document.querySelector('invalid-screen-overlay > button')
+invalidOverlayCloseButton.addEventListener('click', () => {
+    invalidOverlayCloseButton.parentElement.style.display = "none"
+})
+
 async function createOtherPlayersHands(playerCount) {
     // The amount of other players to create is the playerCount - 1 since the player playing has a different hand: his own
     const nOtherPlayers = playerCount - 1
@@ -18,6 +25,7 @@ async function createOtherPlayersHands(playerCount) {
     for (i = 0; i < nOtherPlayers; i++) {
         // Create the other player
         let otherPlayerHand = document.createElement('other-player-hand')
+        otherPlayerHand.id = `debugHand-${i}`  // TODO: remove
 
         // Place on the predefined position
         otherPlayerHand.style.top = `${otherPlayersHandsPosition[i][0]}dvh`
@@ -41,7 +49,26 @@ async function createOtherPlayersHands(playerCount) {
             angle += angleStep
         }
 
+        // Add two pins showing if the player is the taker or a called player
+        let takerPin = document.createElement('other-player-pin-taker')
+        takerPin.classList.add('other-player-pin')
+        takerPin.style.display = 'none'
+        takerPin.innerHTML = '<abbr title="Taking player">T</abbr>'
+
+        let calledPin = document.createElement('other-player-pin-called')
+        calledPin.classList.add('other-player-pin')
+        calledPin.style.display = 'none'
+        calledPin.innerHTML = '<abbr title="Called player">C</abbr>'
+
+        let chelemPin = document.createElement('other-player-pin-chelem')
+        chelemPin.classList.add('other-player-pin')
+        chelemPin.style.display = 'none'
+        chelemPin.innerHTML = '<abbr title="Chelem">Ch</abbr>'
+
         // Place all elements on the DOM
+        profilePicture.appendChild(takerPin)
+        profilePicture.appendChild(calledPin)
+        profilePicture.appendChild(chelemPin)
         profilePicture.appendChild(userNameDisplay)
         otherPlayerHand.appendChild(profilePicture)
         otherPlayersHands.appendChild(otherPlayerHand)
@@ -110,8 +137,6 @@ async function run() {
 
     // DEBUG:
 
-    n = 0
-    //setInterval(() => {document.querySelector("card-stack > tarot-card").style.transform = `translateX(-50%) rotate(${n++}deg)`}, 1)
 }
 
 run()
@@ -120,10 +145,8 @@ run()
 // ***************************
 // ********** "API" **********
 // ***************************
-async function moveCards(cards, destTopPercent, destLeftPercent, interval=0, finalAppend=undefined) {
+async function moveCards(cards, destTopPercent, destLeftPercent, sync=false, interval=0, finalAppend=undefined) {
     for (card of cards) {
-        let tarotTable = document.querySelector("tarot-table")
-
         // Get the current position of the cards
         let currentTop = (card.getBoundingClientRect().top - tarotTable.getBoundingClientRect().top) / tarotTable.getBoundingClientRect().bottom * 100
         let currentLeft = (card.getBoundingClientRect().left - tarotTable.getBoundingClientRect().left) / tarotTable.getBoundingClientRect().right * 100
@@ -141,16 +164,28 @@ async function moveCards(cards, destTopPercent, destLeftPercent, interval=0, fin
         // Move the card to the specified location
         card.style.top = `${destTopPercent}%`
         card.style.left = `${destLeftPercent}%`
-        
+
         // Wait for transition end before appending
-        await new Promise(resolve => setTimeout(resolve,
+        new Promise(() => setTimeout( () => {
+            // Append the card to any other element specified
+            if (typeof(finalAppend) === 'object' ) {
+                finalAppend.appendChild(card)
+            }},
             // Time based on the transition-duration in ms
-            window.getComputedStyle(card).getPropertyValue("transition-duration").slice(0,-1)*1000)) 
-
-        if (typeof(finalAppend) === 'object' ) {
-            finalAppend.appendChild(card)
+            window.getComputedStyle(card).getPropertyValue("transition-duration").slice(0,-1)*1000)
+        )
+        
+        if (!(sync)) {
+            // Wait in between moving cards
+            await new Promise(resolve => setTimeout(resolve, interval))
         }
-
-        await new Promise(resolve => setTimeout(resolve, interval))
     }
+}
+
+async function showPin(playerID, pin) {
+    document.querySelector(`${playerID} other-player-pin-${pin}`).style.display = 'block'
+}
+
+async function hidePin(playerID, pin) {
+    document.querySelector(`${playerID} other-player-pin-${pin}`).style.display = 'none'
 }
