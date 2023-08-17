@@ -1,10 +1,5 @@
 const tarotTable = document.querySelector("tarot-table")
 
-const invalidOverlayCloseButton = document.querySelector('invalid-screen-overlay > button')
-invalidOverlayCloseButton.addEventListener('click', () => {
-    invalidOverlayCloseButton.parentElement.style.display = "none"
-})
-
 async function createOtherPlayersHands(playerCount) {
     // The amount of other players to create is the playerCount - 1 since the player playing has a different hand: his own
     const nOtherPlayers = playerCount - 1
@@ -132,14 +127,18 @@ async function onInitialDeckMutation(mutations) {
 }
 
 async function run() {
+    const invalidOverlayCloseButton = document.querySelector('invalid-screen-overlay > button')
+    invalidOverlayCloseButton.addEventListener('click', () => {
+        invalidOverlayCloseButton.parentElement.style.display = "none"
+    })
+
     await createOtherPlayersHands(Math.floor(Math.random() * (5 - 3 + 1)) + 3)  // TODO: replace with getPlayerCount
     await createDeck("init-deck")
-
+    for (i = 0; i < 78; i++) {
+    await moveCards(document.querySelectorAll(`#tarot-card-${i}`), 80, 50, true, NaN, document.querySelector("own-hand-lower-row"))}
     // DEBUG:
 
 }
-
-run()
 
 
 // ***************************
@@ -165,21 +164,27 @@ async function moveCards(cards, destTopPercent, destLeftPercent, sync=false, int
         card.style.top = `${destTopPercent}%`
         card.style.left = `${destLeftPercent}%`
 
-        // Wait for transition end before appending
-        new Promise(() => setTimeout( () => {
-            // Append the card to any other element specified
-            if (typeof(finalAppend) === 'object' ) {
-                finalAppend.appendChild(card)
-            }},
-            // Time based on the transition-duration in ms
-            window.getComputedStyle(card).getPropertyValue("transition-duration").slice(0,-1)*1000)
-        )
+        // Append the card to any other element specified
+        if (typeof(finalAppend) === 'object' ) {
+            // Wait for transition end before appending
+            endMove(card, finalAppend)
+        }        
         
         if (!(sync)) {
             // Wait in between moving cards
             await new Promise(resolve => setTimeout(resolve, interval))
         }
     }
+}
+
+async function endMove(card, finalAppend) {
+    setTimeout(() => {
+        console.log(card)
+        finalAppend.appendChild(card)
+    },
+        // Time based on the transition-duration in ms
+        window.getComputedStyle(card).getPropertyValue("transition-duration").slice(0,-1)*1000
+    )
 }
 
 async function showPin(playerID, pin) {
@@ -189,3 +194,6 @@ async function showPin(playerID, pin) {
 async function hidePin(playerID, pin) {
     document.querySelector(`${playerID} other-player-pin-${pin}`).style.display = 'none'
 }
+
+
+run()
