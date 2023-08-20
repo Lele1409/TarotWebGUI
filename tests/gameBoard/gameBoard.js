@@ -83,7 +83,7 @@ async function ownHandObserverConnect() {
 ownHandObserverConnect()
 
 // When a change in one of the own-hand child elements is detected
-async function onOwnHandMutation(mutations) {
+async function onOwnHandMutation(mutations) {  // TODO: implement some sort of sorting
     // Get the rows in the hand
     const upperRow = document.querySelector('own-hand-upper-row')
     const lowerRow = document.querySelector('own-hand-lower-row')
@@ -179,7 +179,6 @@ async function moveCards(cards, destTopPercent, destLeftPercent, sync=false, int
 
 async function endMove(card, finalAppend) {
     setTimeout(() => {
-        console.log(card)
         finalAppend.appendChild(card)
     },
         // Time based on the transition-duration in ms
@@ -194,6 +193,19 @@ async function showPin(playerID, pin) {
 async function hidePin(playerID, pin) {
     document.querySelector(`${playerID} other-player-pin-${pin}`).style.display = 'none'
 }
+
+async function playCard(playerID, card) {  // From player to middle, location depending on playerCount
+
+}
+
+async function dealCard(playerID, card) {  // From init-deck to player
+
+}
+
+async function putAwayTrick() {
+
+}
+
 
 
 run()
