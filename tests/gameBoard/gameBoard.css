@@ -83,8 +83,7 @@ other-player-hand {
     display: block;
 
     position: absolute;
-    top: 50%;
-    bottom: 50%;
+    top: 50%; bottom: 50%;
 
     height: 1.2vw;
 
@@ -120,8 +119,7 @@ other-player-pin-called {
 
 other-player-pin-chelem {
     width: 1.5vw;
-    right: 50%;
-    left: 50%;
+    right: 50%; left: 50%;
     transform: translate(-50%, 360%);
 }
 
@@ -168,10 +166,7 @@ other-player-username {
 
 other-player-username > span {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    top: 0; bottom: 0; left: 0; right: 0;
 }
 
 /* OTHERS HAND */
@@ -182,8 +177,7 @@ other-player-username > span {
 
 own-hand {
     position: absolute;
-    left: 24%;
-    right: 24%;
+    left: 24%; right: 24%;
     bottom: 0%;
 
     z-index: 15;
@@ -229,3 +223,23 @@ init-deck {
 
 /* INIT DECK */
 /*************/
+
+/******************/
+/* CURRENT TRICK */
+
+current-trick {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    top: 30%; left: 47%; right: 47%;
+    transform: translate(0, -5%0);
+}
+
+current-trick tarot-card {
+    position: unset;
+    width: 60%;
+}
+
+/* CURRENT TRICK */
+/*****************/

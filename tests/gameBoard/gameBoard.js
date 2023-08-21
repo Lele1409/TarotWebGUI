@@ -196,18 +196,32 @@ async function hidePin(playerID, pin) {
     document.querySelector(`${playerID} other-player-pin-${pin}`).style.display = 'none'
 }
 
+// Specific card movements
+async function dealCards(playerID, card) {  // From init-deck to player
+
+}
+
 async function playCard(playerID, card) {  // From player to middle, location depending on playerCount
+    const player = document.querySelector(`#${playerID}`)
 
+    const currentTrick = document.querySelector("current-trick")
+    const currentTrickTop = (currentTrick.getBoundingClientRect().top - tarotTable.getBoundingClientRect().top) / tarotTable.getBoundingClientRect().bottom * 100
+    const currentTrickRight = (currentTrick.getBoundingClientRect().right - tarotTable.getBoundingClientRect().right) / tarotTable.getBoundingClientRect().right * -100
+
+    // Move to the player playing
+    card.style.visibility = "hidden"
+    await player.appendChild(card)
+    card.style.visibility = "visible"
+    // Move towards the middle
+    await moveCards([card], currentTrickTop, currentTrickRight, false, 0, currentTrick)
 }
 
-async function dealCard(playerID, card) {  // From init-deck to player
-
+async function putAwayTrick() {  // Cards in the current-hand up through the top of the scree
+    for (card of document.querySelectorAll("current-trick > tarot-card")) {
+        console.log(card)
+        const cardPosLeft = (card.getBoundingClientRect().left - tarotTable.getBoundingClientRect().left) / tarotTable.getBoundingClientRect().right * 100
+        await moveCards([card], -20, cardPosLeft, false, 50, undefined)
+    }
 }
-
-async function putAwayTrick() {
-
-}
-
-
 
 run()
