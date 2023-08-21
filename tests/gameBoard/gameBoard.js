@@ -134,10 +134,10 @@ async function run() {
 
     await createOtherPlayersHands(Math.floor(Math.random() * (5 - 3 + 1)) + 3)  // TODO: replace with getPlayerCount
     await createDeck("init-deck")
-    for (i = 0; i < 78; i++) {
+    //for (i = 0; i < 78; i++) {
     
     // DEBUG:
-    await moveCards(document.querySelectorAll(`#tarot-card-${i}`), 80, 50, true, NaN, document.querySelector("own-hand-lower-row"))}
+    //await moveCards(document.querySelectorAll(`#tarot-card-${i}`), 80, 50, true, NaN, document.querySelector("own-hand-lower-row"))}
 
 }
 
@@ -197,8 +197,14 @@ async function hidePin(playerID, pin) {
 }
 
 // Specific card movements
-async function dealCards(playerID, card) {  // From init-deck to player
-
+async function dealCards(cards, playerID) {  // From init-deck to player
+    const player = document.querySelector(`#${playerID}`)
+    const currentPlayerTop = (player.getBoundingClientRect().top - tarotTable.getBoundingClientRect().top) / tarotTable.getBoundingClientRect().bottom * 100
+    const currentPlayerLeft = (player.getBoundingClientRect().left - tarotTable.getBoundingClientRect().left) / tarotTable.getBoundingClientRect().right * 100
+    for (card of cards) {
+        await moveCards([card], currentPlayerTop, currentPlayerLeft, true, undefined, player)
+        card.style.visibility = "hidden"
+    }
 }
 
 async function playCard(playerID, card) {  // From player to middle, location depending on playerCount
