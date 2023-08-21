@@ -135,8 +135,9 @@ async function run() {
     await createOtherPlayersHands(Math.floor(Math.random() * (5 - 3 + 1)) + 3)  // TODO: replace with getPlayerCount
     await createDeck("init-deck")
     for (i = 0; i < 78; i++) {
-    await moveCards(document.querySelectorAll(`#tarot-card-${i}`), 80, 50, true, NaN, document.querySelector("own-hand-lower-row"))}
+    
     // DEBUG:
+    await moveCards(document.querySelectorAll(`#tarot-card-${i}`), 80, 50, true, NaN, document.querySelector("own-hand-lower-row"))}
 
 }
 
@@ -177,7 +178,8 @@ async function moveCards(cards, destTopPercent, destLeftPercent, sync=false, int
     }
 }
 
-async function endMove(card, finalAppend) {
+// Synchronous function as to not block the execution of moveCards for the other cards
+function endMove(card, finalAppend) {
     setTimeout(() => {
         console.log(card)
         finalAppend.appendChild(card)
