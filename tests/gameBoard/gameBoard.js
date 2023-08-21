@@ -202,8 +202,11 @@ async function dealCards(cards, playerID) {  // From init-deck to player
     const currentPlayerTop = (player.getBoundingClientRect().top - tarotTable.getBoundingClientRect().top) / tarotTable.getBoundingClientRect().bottom * 100
     const currentPlayerLeft = (player.getBoundingClientRect().left - tarotTable.getBoundingClientRect().left) / tarotTable.getBoundingClientRect().right * 100
     for (card of cards) {
-        await moveCards([card], currentPlayerTop, currentPlayerLeft, true, undefined, player)
-        card.style.visibility = "hidden"
+        await moveCards([card], currentPlayerTop, currentPlayerLeft, false, 10, player)
+        
+        if (!(playerID === "own-hand-lower-row")) {
+            card.style.visibility = "hidden"
+        }
     }
 }
 
@@ -228,6 +231,10 @@ async function putAwayTrick() {  // Cards in the current-hand up through the top
         const cardPosLeft = (card.getBoundingClientRect().left - tarotTable.getBoundingClientRect().left) / tarotTable.getBoundingClientRect().right * 100
         await moveCards([card], -20, cardPosLeft, false, 50, undefined)
     }
+}
+
+async function sortOwnHand(order) {
+    moveCards(document.querySelectorAll("own-hand tarot-card"), 80, 80, true)
 }
 
 run()
