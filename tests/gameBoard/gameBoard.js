@@ -126,6 +126,31 @@ async function onInitialDeckMutation(mutations) {
     }
 }
 
+async function activateToggleButtons() {
+    const toggleButtons = document.querySelectorAll("button[toggle]")
+    for (button of toggleButtons) {
+        button.addEventListener("mouseup", (event) => {
+            if (button.getAttribute("toggle") === "unpressed") {
+                button.setAttribute("toggle", "pressed")
+            } else if (button.getAttribute("toggle") === "pressed") {
+                button.setAttribute("toggle", "unpressed")
+            }
+        })
+    }
+}
+
+async function disableButtons(buttons) {
+    for (button of buttons) {
+        button.disabled = true
+    }
+}
+
+async function enableButtons(buttons) {
+    for (button of buttons) {
+        button.disabled = false
+    }
+}
+
 async function run() {
     const invalidOverlayCloseButton = document.querySelector('invalid-screen-overlay > button')
     invalidOverlayCloseButton.addEventListener('click', () => {
@@ -235,6 +260,54 @@ async function putAwayTrick() {  // Cards in the current-hand up through the top
 
 async function sortOwnHand(order) {
     moveCards(document.querySelectorAll("own-hand tarot-card"), 80, 80, true)
+}
+
+async function displayMultipleChoice(choices) {
+    // Choices should be an object like so:
+    // Every element can be an empty list, <designates defaultValue>
+    // [
+    //     [
+    //         (text:) <"i"> ? "string",
+    //         (toggle:) <"none"> ? "pressed" ? "unpressed",
+    //         (disable:) <false> ? true
+    //     ],
+    //     [
+    //         ...
+    //     ]
+    // ]
+
+    const oldElems = document.querySelectorAll("multiple-choice-container")
+    for (elem of oldElems) {
+        elem.remove()
+    }
+
+    const multipleChoiceElem = document.createElement("multiple-choice-container")
+
+    let i = 0
+    for (choice of choices) {
+        const button = document.createElement("button")
+
+        if (choice[0] === undefined) {
+            button.innerHTML = "null"
+        } else {
+            button.innerHTML = choice[0]
+        }
+
+        if (!(choice[1] === undefined)) {
+            button.setAttribute("toggle", choice[1])
+        }
+
+        if (!(choice[2] === undefined) && choice[2]) {
+            button.setAttribute("disabled", '')
+        }
+
+        multipleChoiceElem.appendChild(button)
+        i++
+    }
+
+    await activateToggleButtons
+
+    tarotTable.appendChild(multipleChoiceElem)
 }
 
 run()
