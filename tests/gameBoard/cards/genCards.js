@@ -139,14 +139,7 @@ async function createDeck(deckElementSelectorString) {
     deckElement.style.visibility = 'visible'
 }
 
-async function setCardFlippedState(cards, isFlipped, interval=500, reversed=false) {
-    // Select the cards
-    if (typeof(cards) === 'string') {
-        cards = Array.from(document.querySelectorAll(cards))
-    } else {
-        cards = Array.from([cards].flat())
-    }
-
+async function setCardsFlippedState(cards, isFlipped, interval=500, reversed=false) {
     // Reverse flipping order if reversed is true
     if (reversed) {cards.reverse()}
 

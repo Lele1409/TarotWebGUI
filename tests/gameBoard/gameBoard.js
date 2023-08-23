@@ -122,7 +122,7 @@ initialDeckObserver.observe(document.querySelector('init-deck'), {
 
 async function onInitialDeckMutation(mutations) {
     for (mutation of mutations) {
-        mutation.addedNodes.forEach(async function(node) {await setCardFlippedState(node, true, 0)})
+        mutation.addedNodes.forEach(async function(node) {await setCardsFlippedState([node], true, 0)})
     }
 }
 
@@ -231,6 +231,8 @@ async function dealCards(cards, playerID) {  // From init-deck to player
         
         if (!(playerID === "own-hand-lower-row")) {
             card.style.visibility = "hidden"
+        } else if (playerID === "own-hand-lower-row") {
+            await setCardsFlippedState([card], false, 0)
         }
     }
 }
@@ -258,8 +260,15 @@ async function putAwayTrick() {  // Cards in the current-hand up through the top
     }
 }
 
-async function sortOwnHand(order) {
+async function sortOwnHandByCardName(order) {
+    // Parameter order is a list of the name of the cards, order starting at the top left card and ending
+    // at the lower right card
     moveCards(document.querySelectorAll("own-hand tarot-card"), 80, 80, true)
+    let cards = []
+    for (card of order) {
+        cards.push(document.querySelector(`tarot-card[card=${card}]`))
+    }
+    dealCards(cards, "own-hand-lower-row")
 }
 
 async function displayMultipleChoice(choices) {
