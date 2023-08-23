@@ -4,22 +4,21 @@ body {
     margin: 35%;
   }
   
-  multiple-choice-container {
+multiple-choice-container {
     background: rgba(0, 0, 0, .8);
     margin-bottom: 50px;
-  }
+}
   
-  multiple-choice-container {
+multiple-choice-container {
     border-radius: .45rem;
     padding: .25dvw;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(1fr);
     grid-column-gap: .25dvw;
     grid-row-gap: .25dvw;
-  }
+}
   
-  button {
+multiple-choice-container button {
     background: #fff;
     border-radius: .35rem;
     border: .125rem solid;
@@ -31,14 +30,21 @@ body {
     transition: transform .2s;
     user-select: none;    
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  }
+}
   
-  button:not(:disabled):hover {
+multiple-choice-container button:not(:disabled):hover {
     transform: scale(1.015);
-  }
+}
   
-  button:not(:disabled):hover:active {
+multiple-choice-container button:not(:disabled):hover:active {
     transform: scale(1.01) translateY(.08rem);
     box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12);
-  }
-  
+}
+
+multiple-choice-container button[toggle="pressed"] {
+    background-color: #ddd;
+}
+
+multiple-choice-container button[toggle="unpressed"] {
+    background-color: #fff;
+}
