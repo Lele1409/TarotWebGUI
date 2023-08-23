@@ -12,21 +12,23 @@
 <body>
     <tarot-table>
         <other-players-hands-wrapper></other-players-hands-wrapper>
-        <own-hand>
-            <own-hand-upper-row class="own-hand-card-row"></own-hand-upper-row>
-            <own-hand-lower-row class="own-hand-card-row"></own-hand-lower-row>
+        <own-hand id="own-hand">
+            <own-hand-upper-row id="own-hand-upper-row" class="own-hand-card-row"></own-hand-upper-row>
+            <own-hand-lower-row id="own-hand-lower-row" class="own-hand-card-row"></own-hand-lower-row>
         </own-hand>
-        <card-stack></card-stack>
+        <init-deck></init-deck>
+        <current-trick></current-trick>
     </tarot-table>
     <menu-wrapper>
         <game-menu></game-menu>
         <game-settings></game-settings>
     </menu-wrapper>
-    <invalid-screen-overlay><!-- May want to replace with just some infobox instead of the overlay, or a button to remove the overlay -->
+    <invalid-screen-overlay>
         <span>
             if on mobile please rotate your device. <br>
-            if on desktop please ajust your browser size.
+            if on desktop please adjust your browser size.
         </span>
+        <button>Close</button>
     </invalid-screen-overlay>
 </body>
 </html>

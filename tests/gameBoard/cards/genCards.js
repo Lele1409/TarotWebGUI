@@ -117,56 +117,42 @@ async function createDeck(deckElementSelectorString) {
     // Create the cards
     // First trumps
     const deck = []
-    for (let i = 1; i <= 21; i++) {  // TODO: change back to 21
+    for (let i = 1; i <= 21; i++) {
         deck.push(createCard('T', i))
     }
     // Add the excuse
     deck.push(createCard('T', 'EX'))
 
     // Add all the cards from the other suits
-    //suits.forEach(suit => {
-    //    cardRanks.forEach(rank => {
-    //        deck.push(createCard(suit, rank))
-    //    })
-    //})
+    suits.forEach(suit => {
+        cardRanks.forEach(rank => {
+            deck.push(createCard(suit, rank))
+        })
+    })
 
     const deckElement = document.querySelector(deckElementSelectorString)
-    deck.forEach(card => {deckElement.appendChild(card)})
-}
-
-async function setCardPosition(cards, top, left, interval=500, reversed=false) {
-    // Select the cards
-    if (typeof(cards) === 'string') {
-        cards = Array.from(document.querySelectorAll(cards))
-    } else if (typeof(cards) === 'array') {
-        cards = cards
-    } else {
-        console.error("Parameter cards must be either a string or a array of card elements")
+    deckElement.style.visibility = 'hidden'
+    for (card of deck) {
+        deckElement.appendChild(card)
+        await new Promise(resolve => setTimeout(resolve, 10))
     }
-
-    if (reversed) {cards.reverse()}
-
-    // Move cards one by one
-    for (card of cards) {
-        await new Promise(resolve => setTimeout(resolve, interval));
-        card.style.top = top
-        card.style.left = left
-    }
+    deckElement.style.visibility = 'visible'
 }
 
 async function setCardFlippedState(cards, isFlipped, interval=500, reversed=false) {
     // Select the cards
     if (typeof(cards) === 'string') {
-    cards = Array.from(document.querySelectorAll(cards))
+        cards = Array.from(document.querySelectorAll(cards))
     } else {
-        cards = Array.from(cards)
+        cards = Array.from([cards].flat())
     }
 
+    // Reverse flipping order if reversed is true
     if (reversed) {cards.reverse()}
 
     // Flip cards one by one
     for (card of cards) {
-        await new Promise(resolve => setTimeout(resolve, interval));
+        await new Promise(resolve => setTimeout(resolve, interval))
         card.setAttribute("isFlipped", isFlipped)
     }
 }
